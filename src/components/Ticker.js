@@ -18,16 +18,6 @@ function Ticker({ tickerData }) {
     ] = tickerData;
   }
 
-  console.log("BID", BID);
-  console.log("BID_SIZE", BID_SIZE);
-  console.log("ASK", ASK);
-  console.log("ASK_SIZE", ASK_SIZE);
-  console.log("DAILY_CHANGE", DAILY_CHANGE);
-  console.log("DAILY_CHANGE_RELATIVE", DAILY_CHANGE_RELATIVE);
-  console.log("LAST_PRICE", LAST_PRICE);
-  console.log("VOLUME", VOLUME);
-  console.log("HIGH", HIGH);
-  console.log("LOW", LOW);
   return (
     <div className="tickerWidget">
       <div className="rows">
