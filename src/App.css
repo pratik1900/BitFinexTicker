@@ -1,3 +1,7 @@
+:root {
+  --off-white: #c5cacf;
+}
+
 .App {
   text-align: center;
 }
@@ -28,11 +32,26 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.tickerWidget {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 25%;
+  background-color: #172d3e;
+  color: var(--off-white);
+  padding-top: 1%;
+  padding-bottom: 1%;
+}
+
+.rows {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.leftRow {
+  display: flex;
+  align-items: center;
+  /* width: 60%; */
 }
