@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { socketUrl } from "./constants";
 import {
@@ -13,14 +13,12 @@ import Loader from "./components/Loader";
 
 function App() {
   const dispatch = useDispatch();
-  // const [tickerData, setTickerData] = useState(null);
 
   const tickerData = useSelector(state => state.data);
   const loading = useSelector(state => state.loading);
   const errors = useSelector(state => state.errors);
 
   const [wsInstance, setWsInstance] = useState(null); //websocket instance
-  // const [timeOutId, setTimeOutId] = useState(null); //to check for network disconnection;
 
   let timeOutId = null;
   let intervalId = null;
@@ -60,6 +58,7 @@ function App() {
       dispatch(fetchDataFailed());
     };
 
+    // PING PONG Functions to monitor network activity
     const Ping = () => {
       // only ping if no previous un-answered pings
       if (timeOutId === null) {

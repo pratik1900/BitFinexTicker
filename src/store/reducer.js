@@ -8,13 +8,6 @@ const initialState = {
 
 export default function rootReducer(state = initialState, action) {
   switch (action.type) {
-    case actionTypes.FETCH_DATA_REQUEST:
-      return {
-        ...state,
-        data: null,
-        errors: null,
-        loader: true,
-      };
     case actionTypes.FETCH_DATA_SUCCESS:
       return {
         ...state,
@@ -26,7 +19,6 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         data: null,
-        // errors: action.error,
         errors: "Something Went Wrong! Please try again.",
         loader: false,
       };
