@@ -1,5 +1,5 @@
 import "./App.css";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { socketUrl } from "./constants";
 import {
@@ -18,10 +18,14 @@ function App() {
   const loading = useSelector(state => state.loading);
   const errors = useSelector(state => state.errors);
 
-  let ws; //websocket instance
+  const [wsInstance, setWsInstance] = useState(null); //websocket instance
+  // const [timeOutId, setTimeOutId] = useState(null); //to check for network disconnection;
+
+  let timeOutId = null;
+  let intervalId = null;
 
   const init = () => {
-    ws = new WebSocket(socketUrl);
+    let ws = new WebSocket(socketUrl);
 
     const onOpenHandler = () => {
       console.log("CONNECTED......");
@@ -31,16 +35,22 @@ function App() {
         symbol: "tBTCUSD",
       });
       ws.send(config);
+      intervalId = setInterval(Ping, 5000);
     };
     const onMessageHandler = message => {
+      // console.log(message);
       let data = JSON.parse(message.data);
       if (Array.isArray(data[1])) {
-        console.log("Setting Ticker DAta:", data[1]);
         dispatch(fetchDataSuccess(data[1]));
       }
+      if (data.event === "pong") {
+        Pong();
+      }
     };
-    const onCloseHandler = () => {
+    const onCloseHandler = event => {
       console.log("DISCONNECTED.......");
+      clearInterval(intervalId);
+      console.log(event);
     };
 
     const onErrorHandler = error => {
@@ -48,23 +58,49 @@ function App() {
       dispatch(fetchDataFailed());
     };
 
+    const Ping = () => {
+      // only ping if no previous un-answered pings
+      if (timeOutId === null) {
+        console.log("Ping");
+        ws.send(
+          JSON.stringify({
+            event: "ping",
+            cid: 3426,
+          })
+        );
+        let tm = setTimeout(function () {
+          /// ---connection closed ///
+          console.log("BOOM");
+          dispatch(fetchDataFailed());
+        }, 10000);
+        timeOutId = tm;
+      }
+    };
+
+    const Pong = () => {
+      console.log("Pong");
+      if (timeOutId) clearTimeout(timeOutId);
+      timeOutId = null;
+    };
+
     ws.onopen = onOpenHandler;
     ws.onmessage = onMessageHandler;
     ws.onclose = onCloseHandler;
     ws.onerror = onErrorHandler;
+
+    setWsInstance(ws);
   };
 
-  useEffect(() => {
-    // init();
-  }, []);
-
   const connectHandler = () => {
-    console.log("RETRYING");
+    console.log("INIT");
+    timeOutId = null;
     init();
   };
 
   const disconnectHandler = () => {
-    ws.close(); //THROWING ERROR
+    if (timeOutId) clearTimeout(timeOutId);
+    // timeOutId = null;
+    wsInstance.close();
     dispatch(fetchDataClear());
   };
 
@@ -74,7 +110,7 @@ function App() {
         "LOADING"
       ) : !tickerData ? (
         <div>
-          <div>{errors}</div>
+          <div className="error">{errors}</div>
           <div>
             <input
               type="button"
@@ -87,6 +123,7 @@ function App() {
         <>
           <Ticker tickerData={tickerData} />
           <input
+            className="btn"
             type="button"
             value={"Disconnect"}
             onClick={disconnectHandler}

@@ -27,7 +27,7 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         data: null,
         // errors: action.error,
-        errors: "Something Went Wrong!",
+        errors: "Something Went Wrong! Please try again.",
         loader: false,
       };
     case actionTypes.FETCH_DATA_CLEAR:

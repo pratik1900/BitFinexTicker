@@ -1,5 +1,28 @@
 :root {
   --off-white: #c5cacf;
+  --red: #a84448;
+  --green: #c1f722;
+}
+body {
+  background: url(https://images.unsplash.com/photo-1583752028088-91e3e9880b46?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1374&q=80)
+    no-repeat;
+  background-size: cover;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  backdrop-filter: blur(10px);
+}
+
+.container {
+  width: 30rem;
+  height: 20rem;
+  padding: 0;
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.15);
+
+  /* backdrop-filter: blur(5px); */
 }
 
 .App {
@@ -44,14 +67,112 @@
   padding-bottom: 1%;
 }
 
+/* .rowsWrapper {
+  position: relative;
+  top: 15%;
+  left: 3%;
+  transform: translateY(-50%);
+} */
+
 .rows {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-evenly;
+  height: 100%;
 }
 
-.leftRow {
+.row1,
+.row2,
+.row3 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.tradingPairSection {
   display: flex;
   align-items: center;
   /* width: 60%; */
+}
+
+input[type="button"] {
+  margin-top: 10%;
+  padding-left: 70px;
+  padding-right: 70px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: gray;
+  color: var(--off-white);
+  transition: 0.6s;
+  cursor: pointer;
+  font-size: 1.5rem;
+  border-radius: 10px;
+  border: gray;
+}
+
+input[type="button"]:hover {
+  /* opacity: 1; */
+  transform: scale(1.1);
+}
+
+input[type="button"]:active {
+  border-style: outset;
+}
+
+.tradingPair {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: larger;
+  color: azure;
+  font-weight: 700;
+  font-size: 48px;
+}
+
+.whiteLetter {
+  color: white;
+  font-size: 24px;
+  font-weight: 200;
+  margin: 0;
+}
+
+.error {
+  font-size: 42px;
+  color: var(--red);
+}
+
+/* LOADER CSS*/
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
