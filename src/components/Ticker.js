@@ -61,8 +61,8 @@ function Ticker({ tickerData }) {
                     <GoTriangleDown />
                   </div>
                   <div>
-                    {Number(DAILY_CHANGE).toLocaleString()} (
-                    {Number(DAILY_CHANGE_RELATIVE * 100).toFixed(2)}
+                    {Math.abs(Number(DAILY_CHANGE).toLocaleString())} (
+                    {Math.abs(Number(DAILY_CHANGE_RELATIVE * 100).toFixed(2))}
                     %)
                   </div>
                 </div>
