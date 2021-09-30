@@ -39,7 +39,7 @@ function Ticker({ tickerData }) {
             </div>
 
             <div className="whiteLetter">
-              {Number(LAST_PRICE).toLocaleString()}
+              ${Number(LAST_PRICE).toLocaleString()}
             </div>
           </div>
         </div>
