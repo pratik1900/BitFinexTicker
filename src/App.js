@@ -9,6 +9,7 @@ import {
 } from "./store/actions";
 
 import Ticker from "./components/Ticker";
+import Loader from "./components/Loader";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,8 +49,9 @@ function App() {
       }
     };
     const onCloseHandler = event => {
-      console.log("DISCONNECTED.......");
       clearInterval(intervalId);
+      dispatch(fetchDataClear());
+      console.log("DISCONNECTED.......");
       console.log(event);
     };
 
@@ -101,13 +103,12 @@ function App() {
     if (timeOutId) clearTimeout(timeOutId);
     // timeOutId = null;
     wsInstance.close();
-    dispatch(fetchDataClear());
   };
 
   return (
     <div className="App">
       {loading ? (
-        "LOADING"
+        <Loader />
       ) : !tickerData ? (
         <div>
           <div className="error">{errors}</div>
